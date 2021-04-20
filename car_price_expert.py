@@ -144,7 +144,7 @@ plt.show()
 
 # %%
 from sklearn.model_selection import train_test_split
-x_train,x_test,t_ytrain,y_test=train_test_split(x,y,test_size=0.2)
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2)
 
 
 # %%
@@ -168,15 +168,28 @@ print(n_estimators)
 # %%
 #random srch cv
 from sklearn.model_selection import RandomizedSearchCV
-random_grid={'n_estimators':n_estimators,
+random_params={'n_estimators':n_estimators,
              'max_features':['auto','sqrt'],
              'max_depth':[int(x) for x in np.linspace(start=5,stop=30, num=6)],
              'min_samples_split':[2,5,10,15,100],
              'min_samples_leaf':[1,2,5,10]}
-print(random_grid)
+print(random_params)
 
 
 # %%
+rf_tuned=RandomizedSearchCV(estimator=rf_reg,param_distributions=random_params,scoring="neg_mean_squared_error",n_iter=10,cv=5,verbose=2,random_state=42,n_jobs=1)
 
 
-
+rf_tuned.fit(x_train,y_train)
+# %%
+predictions=rf_tuned.predict(x_test)
+# %%
+predictions
+# %%
+sns.displot(y_test-predictions)
+# %%
+plt.scatter(y_test,predictions)
+# %%
+import pickle
+file =open('car_price_model.pkl','wb')
+pickle.dump(rf_tuned,file)
