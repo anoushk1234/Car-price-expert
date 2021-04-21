@@ -1,10 +1,9 @@
-from enum import unique
 import numpy as np
 import streamlit as st
 import pandas as pd
 import pickle
-
 from streamlit.config import on_config_parsed
+
 
 pkl_file = open("car_price_model.pkl", "rb")
 model = pickle.load(pkl_file)
@@ -49,13 +48,16 @@ else:
 
 Fuel_Type_Petrol = st.selectbox(
     "Fuel Type",
-    ('Petrol', 'Diesel'), key="2")
+    ('Petrol', 'Diesel',"CNG"), key="2")
 if Fuel_Type_Petrol == "Petrol":
     Fuel_Type_Petrol = 1
     Fuel_Type_Diesel = 0
-else:
+elif Fuel_Type_Petrol== "Diesel":
     Fuel_Type_Petrol = 0
     Fuel_Type_Diesel = 1
+else:
+    Fuel_Type_Petrol = 0
+    Fuel_Type_Diesel = 0
 
 
 Seller_Type_Individual = st.selectbox(
