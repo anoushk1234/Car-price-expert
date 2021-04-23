@@ -30,7 +30,7 @@ html_title = '''
 st.markdown(html_title, unsafe_allow_html=True)
 
 
-yr = st.text_input("Car_Year", "0")
+yr = st.text_input("Car Year", "0")
 yr_variant = 2021-int(yr)
 
 kms_driven = np.log(float(st.text_input("Kms Driven", "0")))
@@ -69,7 +69,7 @@ else:
     Seller_Type_Individual = 0
 
 output=0
-present_price = float(st.text_input("present_price", "0"))
+present_price = float(st.text_input("Purchase Price", "0"))
 if st.button("Predict"):
     prediction=model.predict([[present_price,kms_driven,owner,yr_variant,Fuel_Type_Diesel,Fuel_Type_Petrol,Seller_Type_Individual,Transmission_Manual]])
     output=round(prediction[0],2)
